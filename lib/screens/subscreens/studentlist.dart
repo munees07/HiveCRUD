@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:studentlist/db/model/data_model.dart';
 import 'package:studentlist/db/functions/dbfunctions.dart';
@@ -73,6 +74,11 @@ class _StudentListState extends State<StudentList> {
                         height: 10,
                       ),
                       TextFormField(
+                        keyboardType: TextInputType.name,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'[a-z,A-Z," "]'))
+                        ],
                         style: const TextStyle(
                             color: Color.fromARGB(255, 94, 49, 120)),
                         cursorColor: const Color.fromARGB(255, 94, 49, 120),
@@ -102,8 +108,13 @@ class _StudentListState extends State<StudentList> {
                             color: Color.fromARGB(255, 94, 49, 120)),
                         cursorColor: const Color.fromARGB(255, 94, 49, 120),
                         controller: _agecontrol,
+                        maxLength: 3,
                         keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+                        ],
                         decoration: const InputDecoration(
+                            counterText: '',
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white)),
                             focusedBorder: UnderlineInputBorder(
@@ -115,32 +126,10 @@ class _StudentListState extends State<StudentList> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Enter the Age';
-                          } else {
-                            return null;
                           }
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 94, 49, 120)),
-                        cursorColor: const Color.fromARGB(255, 94, 49, 120),
-                        controller: _phonecontrol,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white)),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 94, 49, 120))),
-                            hintText: ' Phone Number',
-                            hintStyle: TextStyle(color: Colors.white70)),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Enter a Phone Number';
+                          int? age = int.tryParse(value);
+                          if (age == null || age <= 0 || age > 150) {
+                            return "Please enter a valid age";
                           }
                           return null;
                         },
@@ -153,6 +142,7 @@ class _StudentListState extends State<StudentList> {
                             color: Color.fromARGB(255, 94, 49, 120)),
                         cursorColor: const Color.fromARGB(255, 94, 49, 120),
                         controller: _placecontrol,
+                        keyboardType: TextInputType.streetAddress,
                         decoration: const InputDecoration(
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white)),
@@ -168,6 +158,35 @@ class _StudentListState extends State<StudentList> {
                           } else {
                             return null;
                           }
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 94, 49, 120)),
+                        cursorColor: const Color.fromARGB(255, 94, 49, 120),
+                        controller: _phonecontrol,
+                        maxLength: 10,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+                        ],
+                        decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 2,
+                                    color: Color.fromARGB(255, 94, 49, 120))),
+                            hintText: ' Phone Number',
+                            hintStyle: TextStyle(color: Colors.white70)),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter a Phone Number';
+                          }
+                          return null;
                         },
                       ),
                       const SizedBox(
