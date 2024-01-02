@@ -9,7 +9,6 @@ void main() async {
   final directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   Hive.registerAdapter(StudentModelAdapter());
-  await Hive.openBox('studentList');
   runApp(const MyApp());
 }
 
