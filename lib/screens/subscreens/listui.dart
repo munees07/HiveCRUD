@@ -144,7 +144,15 @@ class _ListUiState extends State<ListUi> {
                                                                   context);
                                                             },
                                                             child: const Text(
-                                                                'Cancel'))
+                                                              'Cancel',
+                                                              style: TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          94,
+                                                                          49,
+                                                                          120)),
+                                                            ))
                                                       ],
                                                     ));
                                           },
