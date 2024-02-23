@@ -1,9 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:studentlist/db/functions/dbfunctions.dart';
-import 'package:studentlist/db/model/data_model.dart';
+import 'package:studentlist/model/data_model.dart';
 
 // ignore: must_be_immutable
 class EditScreen extends StatefulWidget {
@@ -86,7 +87,7 @@ class _EditScreenState extends State<EditScreen> {
                   backgroundColor: const Color.fromARGB(255, 94, 49, 120),
                   backgroundImage: _imagePick != null
                       ? FileImage(_imagePick!)
-                      : AssetImage('assets/images/avatarPerson.jpeg')
+                      : const AssetImage('assets/images/avatarPerson.jpeg')
                           as ImageProvider,
                 ),
               ),
@@ -216,7 +217,7 @@ class _EditScreenState extends State<EditScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         updateall();
-                        print("update");
+                        log("update");
                         clearText();
                       }
                     },

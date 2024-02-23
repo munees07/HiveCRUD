@@ -1,9 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:studentlist/db/functions/dbfunctions.dart';
-import 'package:studentlist/db/model/data_model.dart';
+import 'package:studentlist/model/data_model.dart';
 import 'package:studentlist/screens/subscreens/editstudent.dart';
 import 'package:studentlist/screens/subscreens/viewstudent.dart';
 
@@ -37,7 +37,7 @@ class _ListUiState extends State<ListUi> {
                           controller: _searchController,
                           onChanged: (String? value) {
                             setState(() {
-                              search = value.toString();
+                              search = value!;
                             });
                           },
                           style: const TextStyle(
@@ -55,12 +55,12 @@ class _ListUiState extends State<ListUi> {
                         ),
                       ),
                       Expanded(
-                        child: ListView.builder(
+                        child: ListView.separated(
                           itemCount: allStudents.length,
                           itemBuilder: (context, index) {
                             final data =
                                 allStudents.getAt(index) as StudentModel;
-                            late String position = data.name.toString();
+                            late String position = data.name!;
                             if (_searchController.text.isEmpty) {
                               return InkWell(
                                 onTap: () {
@@ -77,7 +77,7 @@ class _ListUiState extends State<ListUi> {
                                   leading: CircleAvatar(
                                       backgroundImage: data.image != null
                                           ? FileImage(File(data.image!))
-                                          : AssetImage(
+                                          : const AssetImage(
                                                   'assets/images/avatarPerson.jpeg')
                                               as ImageProvider),
                                   trailing: Row(
@@ -124,7 +124,7 @@ class _ListUiState extends State<ListUi> {
                                                             onPressed: () {
                                                               deleteStudent(
                                                                   index);
-                                                              print('delete');
+                                                              log('delete');
                                                               isDeleted = true;
                                                               if (isDeleted ==
                                                                   true) {
@@ -195,7 +195,7 @@ class _ListUiState extends State<ListUi> {
                                   leading: CircleAvatar(
                                       backgroundImage: data.image != null
                                           ? FileImage(File(data.image!))
-                                          : AssetImage(
+                                          : const AssetImage(
                                                   'assets/images/avatarPerson.jpeg')
                                               as ImageProvider),
                                   trailing: Row(
@@ -242,7 +242,7 @@ class _ListUiState extends State<ListUi> {
                                                             onPressed: () {
                                                               deleteStudent(
                                                                   index);
-                                                              print('delete');
+                                                              log('delete');
                                                               isDeleted = true;
                                                               if (isDeleted ==
                                                                   true) {
@@ -256,13 +256,7 @@ class _ListUiState extends State<ListUi> {
                                                                   color: Colors
                                                                       .white),
                                                             )),
-                                                        TextButton(
-                                                            onPressed: () {
-                                                              Navigator.pop(
-                                                                  context);
-                                                            },
-                                                            child: const Text(
-                                                                'Cancel'))
+                                                        
                                                       ],
                                                     ));
                                           },
@@ -291,6 +285,15 @@ class _ListUiState extends State<ListUi> {
                             } else {
                               return Container();
                             }
+                          },
+                          separatorBuilder: (context, index) {
+                            return const Divider(
+                              indent: 20,
+                              endIndent: 20,
+                              height: 20,
+                              thickness: 1,
+                              color: Colors.black54,
+                            );
                           },
                         ),
                       ),

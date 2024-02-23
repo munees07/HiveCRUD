@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:studentlist/db/model/data_model.dart';
+import 'package:studentlist/model/data_model.dart';
 import 'package:studentlist/db/functions/dbfunctions.dart';
 import 'package:studentlist/screens/subscreens/listui.dart';
 
@@ -50,7 +50,7 @@ class _StudentListState extends State<StudentList> {
                           maxRadius: 50,
                           backgroundImage: _imagePick != null
                               ? FileImage(_imagePick!)
-                              : AssetImage('assets/images/avatarPerson.jpeg')
+                              : const AssetImage('assets/images/avatarPerson.jpeg')
                                   as ImageProvider,
                         ),
                       ),
@@ -66,7 +66,7 @@ class _StudentListState extends State<StudentList> {
                                         borderRadius:
                                             BorderRadius.circular(50)))),
                             onPressed: () {
-                              _openImagePicker();
+                              _openImagePicker(ImageSource.gallery);
                             },
                             child: const Text("Add Image")),
                       ),
@@ -203,7 +203,7 @@ class _StudentListState extends State<StudentList> {
                               onPressed: () {
                                 if (_formkey.currentState!.validate()) {
                                   addclicked();
-                                  print('create data');
+                                  // print('create data');
                                   clearText();
                                 }
                               },
@@ -261,10 +261,9 @@ class _StudentListState extends State<StudentList> {
     Navigator.pop(context);
   }
 
-  void _openImagePicker() async {
+  void _openImagePicker(source) async {
     final ImagePicker picker = ImagePicker();
-    final XFile? imagePicker =
-        await picker.pickImage(source: ImageSource.gallery);
+    final XFile? imagePicker = await picker.pickImage(source: source);
     if (imagePicker == null) return;
     setState(() {
       _imagePick = File(imagePicker.path);

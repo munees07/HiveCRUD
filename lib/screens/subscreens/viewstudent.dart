@@ -9,7 +9,7 @@ class ViewStudentScreen extends StatelessWidget {
   final String phone;
   final String imagePath;
 
-  const ViewStudentScreen({
+  const ViewStudentScreen({super.key, 
     required this.name,
     required this.age,
     required this.place,
@@ -91,7 +91,7 @@ class CardItem extends StatelessWidget {
   final String title;
   final String content;
 
-  const CardItem({
+  const CardItem({super.key, 
     required this.title,
     required this.content,
   });

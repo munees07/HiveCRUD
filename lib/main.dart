@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studentlist/db/model/data_model.dart';
+import 'package:studentlist/model/data_model.dart';
 import 'package:studentlist/screens/subscreens/studentlist.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
